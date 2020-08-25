@@ -1,3 +1,5 @@
 configstore/
-**/node_modules
+node_modules
+Session.vim
+**/coc
 

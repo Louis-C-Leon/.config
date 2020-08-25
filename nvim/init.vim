@@ -2,7 +2,7 @@
 call plug#begin('~/.vim/plugged')
 
 " Color scheme
-Plug 'rakr/vim-one'
+Plug 'drewtempelmeyer/palenight.vim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -18,82 +18,80 @@ Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 
 " Syntax highlighting
-Plug 'sheerun/vim-polyglot'
+Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'vim-python/python-syntax'
 
-" Linting/formatting
-Plug 'dense-analysis/ale'
+"Markdown extension
+Plug 'gabrielelana/vim-markdown'
 
-" Typescript/JavaScript/React
-Plug 'herringtondarkholme/yats'
+" Completion, linting, and formattin.comg
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Colors
 set termguicolors
 set background=dark
-colorscheme one
-let g:one_allow_italics=1
+colorscheme palenight
+let g:palenight_terminal_italics=1
 
 filetype plugin indent on
 let mapleader=","
 syntax enable
-set expandtab
+set expandtab number showcmd cursorline wildmenu lazyredraw incsearch smartcase hlsearch autoread autoindent
 set softtabstop=2
 set shiftwidth=2
-set number
-set showcmd
-set cursorline
-set wildmenu
-set lazyredraw
-set incsearch
-set smartcase
-set hlsearch
 set scrolloff=5
-set autoread
 set completeopt=longest,menuone
 
 set wildchar=<Tab> wildmenu wildmode=full
 set wildcharm=<C-Z>
 
-nnoremap <F10> :b <C-Z>
-nnoremap j gj
-nnoremap k gk
-nnoremap B ^
-nnoremap E $
-nnoremap gV `[v`]
-nnoremap <leader>s :mksession<CR>
+" Open buffers with wildmenu
+nnoremap <C-\> :b <C-Z>
+
+" Save session
+nnoremap <leader>s :mksession!<CR>
+nnoremap <leader>qs :qa<CR>
 noremap <leader>g :Git
 nnoremap <leader>t :NERDTreeToggle<CR>
-nnoremap <leader>fa :Ag<CR> 
-nnoremap <leader>fa :Ag<CR>
-nnoremap <leader>qs :let @/ = ""<CR>
 
+" Clear search
+nnoremap <leader>\ :let @/ = ""<CR>
+
+" Fuzzy find files and text in current working directory
 nnoremap <C-P> :Files<CR>
+nnoremap <leader>fa :Ag<CR> 
+
+" Save and quit
 nnoremap <leader>w<space> :update<CR>
 nnoremap <leader>q<space> :q<CR>
 
-let g:airline_powerline_fonts=1
-let g:airline_theme='one'
+let g:python_highlight_all=1
+let g:airline#extensions#default#layout = [ [ 'a', 'b', 'c' ], [ 'x', 'y', 'z' ] ]
 let g:indentLine_enabled=1
 " Commenting
 let g:NERDSpaceDelims=1
-" Formatting
-let g:ale_fixers={
-      \ 'json': ['prettier'],
-      \ 'javascript': ['prettier'],
-      \ 'typescript': ['prettier'],
-      \ 'css': ['prettier'],
-      \ 'scss': ['prettier'],
-      \ 'html': ['prettier'],
-      \ 'markdown': ['prettier'],
-      \ 'javascriptreact': ['prettier'],
-      \ 'typescriptreact': ['prettier'],
-      \}
-let g:ale_linters_explicit=1
-let g:ale_fix_on_save=1
-let g:ale_javascript_prettier_use_global=1
 
+" Autosave and autoload when moving between windows
+au FocusGained,BufEnter * :silent! !
+au FocusLost,WinLeave * :silent! w
+
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cul
+    autocmd WinLeave * set nocul
+augroup END
+
+" ------------------------------------------------------------------
+"
+" COC.NVIM Configuration below
 " DEFAULTS FROM EXAMPLE VIMRC ~ https://github.com/neoclide/coc.nvim
+"
+" ------------------------------------------------------------------
+let g:coc_node_path = '/usr/local/bin/node'
+
 " TextEdit might fail if hidden is not set.
 set hidden
 

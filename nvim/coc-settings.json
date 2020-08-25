@@ -1,0 +1,15 @@
+{
+  "npm.binPath": "/usr/local/bin/npm",
+  "tsserver.npm": "/usr/local/bin/npm",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "scss",
+    "graphql",
+    "markdown",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "python"
+  ]
+}
