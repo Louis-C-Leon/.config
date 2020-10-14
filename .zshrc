@@ -100,8 +100,7 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias code="/Applications/Visual\\ Studio\\ Code.app/contents/Resources/app/bin/code"
-alias ctags="`brew --prefix`/bin/ctags"
+# alias code="/Applications/Visual\\ Studio\\ Code.app/contents/Resources/app/bin/code"
 
 # Personal env variables
 export EDITOR='nvim'
@@ -109,6 +108,9 @@ export EDITOR='nvim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS='--layout=reverse --height 40%'
 export FZF_DEFAULT_COMMAND='ag --files-with-matches --nocolor --hidden --ignore .git -g ""'
+
+# Add rbenv into path
+export PATH="$HOME/.rbenv/bin:$PATH"
 
 # Load rbenv automatically by appending
 # the following to ~/.zshrc:
