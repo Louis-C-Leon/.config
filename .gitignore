@@ -1,4 +1,3 @@
 node_modules
 Session.vim
-**/coc
-
+configstore

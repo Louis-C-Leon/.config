@@ -1,0 +1,24 @@
+{
+  "extensions": {
+    "%2FUsers%2Flouisleon%2FDocuments%2Fpersonal%2Freactive-portfolio": [
+      "lse "
+    ],
+    "%2FUsers%2Flouisleon%2F": {
+      "config": [
+        "coc",
+        "j"
+      ]
+    }
+  },
+  "lists": {
+    "%2FUsers%2Flouisleon%2F": {
+      "config": [
+        "ex",
+        "ext"
+      ]
+    },
+    "%2FUsers%2Flouisleon%2FDocuments%2Fpersonal%2Fporchcouch": [
+      "diag"
+    ]
+  }
+}
