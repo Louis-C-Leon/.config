@@ -3,6 +3,7 @@ call plug#begin('~/.vim/plugged')
 
 " Color scheme
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'morhetz/gruvbox'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -23,6 +24,9 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-python/python-syntax'
 
+" tmux and vim pane navigation
+Plug 'christoomey/vim-tmux-navigator'
+
 "Markdown extension
 Plug 'gabrielelana/vim-markdown'
 
@@ -31,10 +35,18 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Colors
-set termguicolors
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 set background=dark
-colorscheme palenight
-let g:palenight_terminal_italics=1
+colorscheme gruvbox
+let g:gruvbox_italic=1
+let g:gruvbox_undercurl=1
+let g:gruvbox_underline=1
+let g:gruvbox_italicize_comments=1
+let g:gruvbox_contrast_dark='hard'
 
 filetype plugin indent on
 let mapleader=","
@@ -54,22 +66,44 @@ nnoremap <C-\> :b <C-Z>
 " Save session
 nnoremap <leader>s :mksession!<CR>
 nnoremap <leader>qs :qa<CR>
+
+" Git
 noremap <leader>g :Git
+noremap <leader>gds :Gdiffsplit
+
+" View current file tree
 nnoremap <leader>t :NERDTreeToggle<CR>
 
 " Clear search
 nnoremap <leader>\ :let @/ = ""<CR>
 
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
 " Fuzzy find files and text in current working directory
 nnoremap <C-P> :Files<CR>
-nnoremap <leader>fa :Ag<CR> 
+nnoremap <C-F> :Ag<CR> 
 
 " Save and quit
 nnoremap <leader>w<space> :update<CR>
 nnoremap <leader>q<space> :q<CR>
 
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+let g:airline_theme='gruvbox'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 let g:python_highlight_all=1
 let g:airline#extensions#default#layout = [ [ 'a', 'b', 'c' ], [ 'x', 'y', 'z' ] ]
+let g:airline_symbols.branch = '⎇'
 let g:indentLine_enabled=1
 " Commenting
 let g:NERDSpaceDelims=1
@@ -90,7 +124,7 @@ augroup END
 " DEFAULTS FROM EXAMPLE VIMRC ~ https://github.com/neoclide/coc.nvim
 "
 " ------------------------------------------------------------------
-let g:coc_node_path = '/usr/local/bin/node'
+let g:coc_node_path = '/usr/bin/node'
 
 " TextEdit might fail if hidden is not set.
 set hidden

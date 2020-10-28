@@ -13,7 +13,7 @@ export NVM_DIR="$HOME/.nvm"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="bureau"
+ZSH_THEME="lukerandall"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -109,9 +109,17 @@ export EDITOR='nvim'
 export FZF_DEFAULT_OPTS='--layout=reverse --height 40%'
 export FZF_DEFAULT_COMMAND='ag --files-with-matches --nocolor --hidden --ignore .git -g ""'
 
-# Add rbenv into path
+# Add rbenv and pyenv into path
 export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
 
 # Load rbenv automatically by appending
 # the following to ~/.zshrc:
 eval "$(rbenv init -)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# Start tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
