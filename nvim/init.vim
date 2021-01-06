@@ -9,6 +9,10 @@ Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
+" Surroundings
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+
 " General productivity/UI improvements
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -42,7 +46,7 @@ if exists('+termguicolors')
 endif
 set background=dark
 colorscheme gruvbox
-let g:gruvbox_italic=1
+let g:gruvbox_italic=2
 let g:gruvbox_undercurl=1
 let g:gruvbox_underline=1
 let g:gruvbox_italicize_comments=1
@@ -50,32 +54,37 @@ let g:gruvbox_contrast_dark='hard'
 
 filetype plugin indent on
 let mapleader=","
+nnoremap ' ,
+vnoremap ' ,
 syntax enable
 set expandtab number showcmd cursorline wildmenu lazyredraw incsearch smartcase hlsearch autoread autoindent
+set noswapfile
+set colorcolumn=80
 set softtabstop=2
 set shiftwidth=2
 set scrolloff=5
 set completeopt=longest,menuone
+set relativenumber
 
 set wildchar=<Tab> wildmenu wildmode=full
 set wildcharm=<C-Z>
 
 " Open buffers with wildmenu
-nnoremap <C-\> :b <C-Z>
+nnoremap <leader>o :b <C-Z>
 
-" Save session
-nnoremap <leader>s :mksession!<CR>
-nnoremap <leader>qs :qa<CR>
+" Save and quit
+nnoremap <leader>w :wa<CR>:mksession!<CR>
+nnoremap <leader>q :qa<CR>
 
 " Git
 noremap <leader>g :Git
-noremap <leader>gds :Gdiffsplit
+noremap <leader>d :Gdiffsplit!
 
 " View current file tree
 nnoremap <leader>t :NERDTreeToggle<CR>
 
 " Clear search
-nnoremap <leader>\ :let @/ = ""<CR>
+nnoremap <leader>/ :let @/ = ""<CR>
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
@@ -87,15 +96,14 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-P> :Files<CR>
 nnoremap <C-F> :Ag<CR> 
 
-" Save and quit
-nnoremap <leader>w<space> :update<CR>
-nnoremap <leader>q<space> :q<CR>
-
 " Quicker window movement
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+
+" Close window
+nnoremap <C-q> <C-w>q
 
 let g:airline_theme='gruvbox'
 if !exists('g:airline_symbols')
@@ -112,12 +120,6 @@ let g:NERDSpaceDelims=1
 au FocusGained,BufEnter * :silent! !
 au FocusLost,WinLeave * :silent! w
 
-augroup BgHighlight
-    autocmd!
-    autocmd WinEnter * set cul
-    autocmd WinLeave * set nocul
-augroup END
-
 " ------------------------------------------------------------------
 "
 " COC.NVIM Configuration below
@@ -126,7 +128,7 @@ augroup END
 " ------------------------------------------------------------------
 let g:coc_node_path = '/usr/bin/node'
 
-" TextEdit might fail if hidden is not set.
+" TextEdit might fail if hidden is not .
 set hidden
 
 " Some servers have issues with backup files, see #649.
@@ -167,7 +169,11 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
